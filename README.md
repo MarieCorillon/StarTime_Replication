@@ -1,6 +1,6 @@
 # Replication Package: Sparse Tree-Based Aggregation for Time Series Regressions
 
-[![arXiv](https://img.shields.io/badge/arXiv-XXXX.XXXXX-b31b1b.svg)](https://arxiv.org/abs/XXXX.XXXXX)
+[![arXiv](https://arxiv.org/abs/2606.03665)
 
 > This repository contains the complete replication code for *Sparse Tree-Based Aggregation for Time Series Regressions*.  
 > It includes all Monte Carlo simulations (AR and Mixed-Frequency) and both empirical applications (Financial and Macro).  
@@ -336,9 +336,3 @@ A: Yes. Set `REPLICATE_PAPER_RESULTS <- FALSE`, `RUN_SIMULATIONS <- TRUE`, and f
 A: These tests require the *full* cross-section of models. Either (1) set `USE_PAPER_RESULTS <- TRUE` to use the shipped full results, or (2) ensure you have estimated all configurations for that application (e.g., all financial lag/window/horizon combinations).
 
 ---
-
-## Citation
-
-If you use this code, please cite the paper:
-
-> Author, A. and Author, B. (20XX). *[Paper Title]*. arXiv preprint [arXiv:XXXX.XXXXX](https://arxiv.org/abs/XXXX.XXXXX).
