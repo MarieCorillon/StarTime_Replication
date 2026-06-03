@@ -143,11 +143,19 @@ The required toolchain is called **Rtools**. The `INSTALL_RTOOLS` toggle at the 
 
 #### macOS
 
-Xcode Command Line Tools are required. If not found, the script stops and instructs you to run the following in your Terminal, then restart R:
+Two components are required:
 
-```bash
-xcode-select --install
-```
+1. **Xcode Command Line Tools** — provides the C/C++ compiler. If not found, the script stops and instructs you to run the following in your Terminal, then restart R:
+
+   ```bash
+   xcode-select --install
+   ```
+
+2. **GNU Fortran** — required to compile `StarTime`'s Fortran sources. It is *not* included with Xcode Command Line Tools and must be installed separately. Download the installer matching your R version and CPU architecture (Apple Silicon vs. Intel) from the official CRAN tools page:
+
+   <https://mac.r-project.org/tools/>
+
+   After installation, restart R before re-running `user_run_file.R`.
 
 #### Linux
 
