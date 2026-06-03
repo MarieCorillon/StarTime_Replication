@@ -344,9 +344,3 @@ A: Yes. Set `REPLICATE_PAPER_RESULTS <- FALSE`, `RUN_SIMULATIONS <- TRUE`, and f
 A: These tests require the *full* cross-section of models. Either (1) set `USE_PAPER_RESULTS <- TRUE` to use the shipped full results, or (2) ensure you have estimated all configurations for that application (e.g., all financial lag/window/horizon combinations).
 
 ---
-
-## Citation
-
-If you use this code, please cite the paper:
-
-> Author, A. and Author, B. (20XX). *[Paper Title]*. arXiv preprint [arXiv:XXXX.XXXXX](https://arxiv.org/abs/XXXX.XXXXX).
