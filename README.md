@@ -349,7 +349,7 @@ They were retrieved from the authors' public data repository (<https://drive.goo
 ### Macroeconomic Data
 The macroeconomic application draws on publicly available series from the following sources, all accessed on November 7, 2025:
 
-- **FRED-MD** and **FRED-QD** (Federal Reserve Bank of St. Louis);
+- **FRED** (Federal Reserve Bank of St. Louis);
 - the **Economic Policy Uncertainty** index (<https://www.policyuncertainty.com>);
 - **Yahoo Finance** (S&P 500 and Dow Jones Industrial Average indices).
 
