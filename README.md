@@ -16,8 +16,8 @@
 5. [Workflow Recipes](#workflow-recipes)
 6. [Output Guide](#output-guide)
 7. [Reproducibility Notes](#reproducibility-notes)
-8. [FAQ & Troubleshooting](#faq--troubleshooting)
-9. [Citation](#citation)
+8. [Data](#data)
+9. [FAQ & Troubleshooting](#faq--troubleshooting)
 
 ---
 
@@ -205,7 +205,7 @@ Set `REPLICATE_PAPER_RESULTS <- TRUE`. The script automatically:
 - Runs all simulation DGPs (AR 1–3, Mixed 1–3, both `n=100` and `n=200`).
 - Runs all application configurations (Financial full lag/window/h grid; Macro full nowcast/forecast/full/reduced/window grid).
 - Generates all plots and tables.
-- Results are saved to `results/data/usere/` and `results/figures/user/`.
+- Results are saved to `results/data/user/` and `results/figures/user/`.
 
 #### Mode B: Custom Execution
 Set `REPLICATE_PAPER_RESULTS <- FALSE` and configure the granular toggles in Section 3 of the dashboard:
@@ -329,6 +329,31 @@ Pre-computed paper results are preserved in `results/data/paper/` and `results/f
 - **Parallel random number generation:** Each Monte Carlo replication `i` is seeded deterministically inside the worker via `set.seed(i + 10000)`. This ensures identical results regardless of the number of parallel cores (`USE_PARALLEL`) or the machine architecture.
 - **Exact dependency versions:** The `setup/install_dependencies.R` script forces specific CRAN package versions (e.g., `glmnet 4.1-8`, `ggplot2 4.0.1`, etc.) using `pak::pkg_install()`, removing reliance on lockfile restoration.
 - **Adaptive parallelization:** `NUM_CORES` defaults to `parallel::detectCores() - 1`, but you may cap it on shared systems.
+
+---
+
+## Data
+
+All data required to reproduce the empirical results are included in this repository under the **`data/`** directory, so the full pipeline runs without any additional downloads. The source, access details, and original publication (where applicable) of each dataset are documented below.
+
+### Simulation Data
+The Monte Carlo experiments rely on no external data. All series are generated at runtime from the data-generating processes (DGPs) defined in **`code/simulations/DGPs/`** (AR and Mixed-Frequency), and are fully reproducible from the deterministic seeds described in the [Reproducibility Notes](#reproducibility-notes).
+
+### Financial Data
+The financial application uses the 10-minute realized variances of the 30 Dow Jones Industrial Average constituents, provided in **`data/financial/Variances_10min.csv`**. These data form part of the replication materials accompanying:
+
+> Hecq, A., Margaritella, L., and Smeekes, S. (2023). Granger Causality Testing in High-Dimensional VARs: A Post-Double-Selection Procedure. *Journal of Financial Econometrics*, 21(3), 915–958. https://doi.org/10.1093/jjfinec/nbab023
+
+They were retrieved from the authors' public data repository (<https://drive.google.com/drive/folders/1Yr8CSZGqV9g_bK2yK--V21SmtKQmVVKf>), accessed on October 17, 2025.
+
+### Macroeconomic Data
+The macroeconomic application draws on publicly available series from the following sources, all accessed on November 7, 2025:
+
+- **FRED-MD** and **FRED-QD** (Federal Reserve Bank of St. Louis);
+- the **Economic Policy Uncertainty** index (<https://www.policyuncertainty.com>);
+- **Yahoo Finance** (S&P 500 and Dow Jones Industrial Average indices).
+
+The transformed and aligned dataset is provided in **`data/macro/aligned_macro_data.RData`**, exactly as described in the paper. The corresponding model-ready inputs, the predictor matrices (**`X_macro_*.RData`**) and target vectors (**`y_macro_*.RData`**), are already aligned and can be passed directly to the StarTime functions.
 
 ---
 
