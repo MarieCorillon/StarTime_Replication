@@ -131,6 +131,8 @@ The script will then:
 
 `StarTime` is a custom C++ package that must be compiled on your machine the first time it is installed. The script detects whether the necessary tools are present and guides you through the process automatically.
 
+> **Note:** `StarTime` is also available as a standalone package at [github.com/MarieCorillon/StarTime](https://github.com/MarieCorillon/StarTime) if you want to use it independently from this replication.
+
 #### Windows
 
 The required toolchain is called **Rtools**. The `INSTALL_RTOOLS` toggle at the top of `user_run_file.R` controls what happens if it is missing (set to `TRUE` by default).
