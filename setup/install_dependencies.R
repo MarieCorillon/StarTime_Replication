@@ -103,13 +103,13 @@ pkgs_not_available <- c()
 for (pkg in packages) {
 
   if (pkg == "StarTime") {
-    # StarTime is not on CRAN; install from the bundled source tarball
     if (!requireNamespace("StarTime", quietly = TRUE)) {
       cat("Installing StarTime from local tarball...\n")
       tryCatch(
-        pak::pkg_install("setup/StarTime_1.0.tar.gz", ask = FALSE),
+        install.packages("setup/StarTime_1.0.tar.gz",
+                         repos = NULL, type = "source"),
         error = function(e) {
-          cat("StarTime install FAILED:", e$message, "\n")
+          cat("StarTime install FAILED:", conditionMessage(e), "\n")
           pkgs_not_available <<- c(pkgs_not_available, "StarTime")
         }
       )
