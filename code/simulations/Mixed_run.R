@@ -46,16 +46,20 @@ names(all_dgp_files_Mixed) <- c(
 dgp_files_Mixed <- all_dgp_files_Mixed[selected_dgps_Mixed]
 
 
+registerDoRNG(20250612)
+
 #' Execute Mixed Model Simulation for a Single DGP
 #'
 #' @param dgp_file Path to DGP configuration script
-#' @param M Number of Monte Carlo repetitions (default = 3)
+#' @param M Number of Monte Carlo repetitions (default = 500)
 #' @return Data frame containing averaged performance metrics
 run_dgp_simulation_Mixed <- function(dgp_file, M = 500) {
-  set.seed(20250612)
   results <- foreach(i = 1:M,
                      .packages = c("Matrix", "midasr", "midasml", "StarTime"),
                      .combine = c) %dopar% {
+                       # Seed inside each worker
+                       set.seed(i + 20000)
+
                        source(file = "code/functions/sim_estimation.R")
                        source(file = "code/functions/sim_data_generation.R")
                        source(file = "code/functions/metrics.R")

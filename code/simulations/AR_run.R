@@ -44,10 +44,12 @@ names(all_dgp_files_AR) <- c(
 dgp_files_AR <- all_dgp_files_AR[selected_dgps_AR]
 
 
+registerDoRNG(20250610)
+
 #' Execute AR Model Simulation for a Single DGP
 #'
 #' @param dgp_file Path to DGP configuration script
-#' @param M Number of Monte Carlo repetitions (default = 3)
+#' @param M Number of Monte Carlo repetitions (default = 500)
 #' 
 #' @return Data frame containing averaged performance metrics
 #' 
@@ -56,26 +58,6 @@ dgp_files_AR <- all_dgp_files_AR[selected_dgps_AR]
 #' 2. Generates AR data according to DGP specifications
 #' 3. Runs estimation methods in parallel
 #' 4. Computes and stores performance metrics
-registerDoRNG(20250610)
-# run_dgp_simulation_AR <- function(dgp_file, M) {
-#   results <- foreach(i = 1:M,
-#                      .packages = c("glmnet", "Matrix", "StarTime"),
-#                      .combine = c) %dopar% {
-#                        source(file = "code/functions/sim_estimation.R")
-#                        source(file = "code/functions/sim_data_generation.R")
-#                        source(file = "code/functions/metrics.R")
-#                        source(dgp_file)
-#                        list(run_AR_simulation(i))
-#                      }
-#   
-#   all_metrics <- do.call(rbind, lapply(results, `[[`, "metrics"))
-#   averaged_metrics <- calculate_average_metrics(all_metrics)
-#   
-#   all_betas <- lapply(results, `[[`, "beta_estimates")
-#   
-#   return(list(metrics = averaged_metrics, betas = all_betas)) 
-# }
-
 run_dgp_simulation_AR <- function(dgp_file, M) {
   results <- foreach(i = 1:M,
                      .packages = c("glmnet", "Matrix", "StarTime"),
