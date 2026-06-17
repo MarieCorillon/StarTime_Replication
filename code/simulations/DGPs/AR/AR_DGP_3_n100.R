@@ -17,7 +17,7 @@ config <- list(
   K_in = 1000,
   stop_thresh = 1e-05,
   ic_type = "BIC",
-  thresh = 0.3
+  thresh = 1
 )
 
 # Derived Parameters (do not modify)

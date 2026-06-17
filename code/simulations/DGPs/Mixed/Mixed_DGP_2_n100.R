@@ -33,7 +33,7 @@ config <- list(
   K_in = 1000,
   stop_thresh = 1e-05,
   ic_type = "BIC",
-  thresh = 0.3
+  thresh = 0.5
 )
 
 # --- Group Structure for Penalized Methods ---
