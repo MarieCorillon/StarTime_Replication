@@ -15,25 +15,29 @@
 #'
 #' @seealso \code{\link[midasr]{midas_r}}
 #'
-safe_midas_r <- function(formula, start) {
-  attempt <- 1
-  while (TRUE) {  # Run indefinitely until we get a result
+safe_midas_r <- function(formula, start, max_attempts = 100) {
+  initial_start <- start
+  for (attempt in seq_len(max_attempts)) {  # Capped so it can never hang
     result <- tryCatch({
       midasr::midas_r(formula, start = start)
     }, error = function(e) {
       message("Attempt ", attempt, " failed: ", e$message)
       return(NULL)
     })
-    
+
     if (!is.null(result)) {
       message("Success on attempt ", attempt)
       return(result)  # If successful, return the result
     }
-    
-    # Modify the starting values slightly and retry
-    start <- list(X = runif(length(start$X), min = 0.5, max = 1.5) * start$X)
-    attempt <- attempt + 1
+
+    # Perturb the starting values and retry. Each element must be perturbed
+    # individually. 
+    start <- lapply(initial_start, function(s) {
+      runif(length(s), min = 0.5, max = 1.5) * s
+    })
   }
+  stop("safe_midas_r: MIDAS model did not converge after ", max_attempts,
+       " attempts.")
 }
 
 
