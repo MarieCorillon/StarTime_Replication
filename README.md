@@ -328,7 +328,7 @@ Pre-computed paper results are preserved in `results/data/paper/` and `results/f
 
 ## Reproducibility Notes
 
-- **Parallel random number generation:** Each Monte Carlo replication `i` is seeded deterministically inside the worker via `set.seed(i + 10000)`. This ensures identical results regardless of the number of parallel cores (`USE_PARALLEL`) or the machine architecture.
+- **Parallel random number generation:** Each Monte Carlo replication `i` is seeded deterministically inside the worker via `set.seed(i + 10000)` for the AR DGPs, and `set.seed(i + 20000)` for the mixed-frequency DGPs. This ensures identical results regardless of the number of parallel cores (`USE_PARALLEL`) or the machine architecture.
 - **Exact dependency versions:** The `setup/install_dependencies.R` script forces specific CRAN package versions (e.g., `glmnet 4.1-8`, `ggplot2 4.0.1`, etc.) using `pak::pkg_install()`, removing reliance on lockfile restoration.
 - **Adaptive parallelization:** `NUM_CORES` defaults to `parallel::detectCores() - 1`, but you may cap it on shared systems.
 

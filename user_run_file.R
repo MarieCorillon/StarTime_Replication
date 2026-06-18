@@ -145,6 +145,11 @@ if (REPLICATE_PAPER_RESULTS) {
     }
   }
   
+  if (RUN_SIMULATIONS) {
+    message("--- Running Simulations ---")
+    source("code/simulations/run_simulations.R")
+  }
+  
   # ---------------------------------------------------------
   # Phase 2: Output Generation (Plots)
   # ---------------------------------------------------------
