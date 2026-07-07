@@ -18,9 +18,9 @@
 if (!requireNamespace("pkgbuild", quietly = TRUE)) install.packages("pkgbuild")
 
 if (!pkgbuild::has_build_tools(debug = FALSE)) {
-
+  
   if (.Platform$OS.type == "windows") {
-
+    
     if (exists("INSTALL_RTOOLS") && isTRUE(INSTALL_RTOOLS)) {
       message("Rtools not found. Downloading and launching the Rtools installer...")
       message("Please follow the installer prompts (click Next/Install).")
@@ -43,14 +43,14 @@ if (!pkgbuild::has_build_tools(debug = FALSE)) {
         "After installing, restart R and run user_run_file.R again."
       )
     }
-
+    
   } else if (Sys.info()[["sysname"]] == "Darwin") {
     stop(
       "Xcode Command Line Tools are required to compile StarTime but were not found.\n\n",
       "Run the following command in your Terminal, then restart R:\n",
       "  xcode-select --install"
     )
-
+    
   } else {
     stop(
       "C++ compilation tools are required to compile StarTime but were not found.\n\n",
@@ -101,20 +101,23 @@ versions <- c(
 pkgs_not_available <- c()
 
 for (pkg in packages) {
-
+  
   if (pkg == "StarTime") {
     if (!requireNamespace("StarTime", quietly = TRUE)) {
-      cat("Installing StarTime from local tarball...\n")
+      
+      cat("Installing StarTime build dependencies (Rcpp, RcppArmadillo)...\n")
+      pak::pkg_install(c("Rcpp@1.1.0", "RcppArmadillo@14.6.0-1"), ask = FALSE)
+      
+      cat("Compiling StarTime from local tarball...\n")
       tryCatch(
-        install.packages("setup/StarTime_1.0.tar.gz",
-                         repos = NULL, type = "source"),
+        pak::pkg_install("local::setup/StarTime_1.0.tar.gz", ask = FALSE),
         error = function(e) {
           cat("StarTime install FAILED:", conditionMessage(e), "\n")
           pkgs_not_available <<- c(pkgs_not_available, "StarTime")
         }
       )
     }
-
+    
   } else {
     # For CRAN packages: install if missing OR if the installed version
     # does not match the pinned version
@@ -124,8 +127,8 @@ for (pkg in packages) {
     )
     target_ver  <- versions[[pkg]]
     needs_install <- is.na(current_ver) ||
-                     (!is.na(target_ver) && current_ver != target_ver)
-
+      (!is.na(target_ver) && current_ver != target_ver)
+    
     if (needs_install) {
       pkg_spec <- if (!is.na(target_ver)) paste0(pkg, "@", target_ver) else pkg
       cat("Installing", pkg_spec, "\n")
